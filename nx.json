@@ -25,6 +25,13 @@
     "react-micro-app-e2e": {
       "tags": [],
       "implicitDependencies": ["react-micro-app"]
+    },
+    "root-app": {
+      "tags": []
+    },
+    "root-app-e2e": {
+      "tags": [],
+      "implicitDependencies": ["root-app"]
     }
   }
 }

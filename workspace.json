@@ -21,7 +21,7 @@
             ],
             "styles": ["apps/react-micro-app/src/styles.scss"],
             "scripts": [],
-            "webpackConfig": "@nrwl/react/plugins/webpack"
+            "webpackConfig": "apps/react-micro-app/webpack.config.js" 
           },
           "configurations": {
             "production": {
@@ -106,6 +106,115 @@
             "config": "apps/react-micro-app-e2e/.eslintrc",
             "tsConfig": ["apps/react-micro-app-e2e/tsconfig.e2e.json"],
             "exclude": ["**/node_modules/**", "!apps/react-micro-app-e2e/**"]
+          }
+        }
+      }
+    },
+    "root-app": {
+      "root": "apps/root-app",
+      "sourceRoot": "apps/root-app/src",
+      "projectType": "application",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@nrwl/web:build",
+          "options": {
+            "outputPath": "dist/apps/root-app",
+            "index": "apps/root-app/src/index.html",
+            "main": "apps/root-app/src/main.ts",
+            "polyfills": "apps/root-app/src/polyfills.ts",
+            "tsConfig": "apps/root-app/tsconfig.app.json",
+            "assets": [
+              "apps/root-app/src/favicon.ico",
+              "apps/root-app/src/assets"
+            ],
+            "styles": ["apps/root-app/src/styles.scss"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/root-app/src/environments/environment.ts",
+                  "with": "apps/root-app/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@nrwl/web:dev-server",
+          "options": {
+            "buildTarget": "root-app:build"
+          },
+          "configurations": {
+            "production": {
+              "buildTarget": "root-app:build:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:lint",
+          "options": {
+            "linter": "eslint",
+            "config": "apps/root-app/.eslintrc",
+            "tsConfig": [
+              "apps/root-app/tsconfig.app.json",
+              "apps/root-app/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!apps/root-app/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/root-app/jest.config.js",
+            "tsConfig": "apps/root-app/tsconfig.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "apps/root-app/src/test-setup.ts"
+          }
+        }
+      }
+    },
+    "root-app-e2e": {
+      "root": "apps/root-app-e2e",
+      "sourceRoot": "apps/root-app-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/root-app-e2e/cypress.json",
+            "tsConfig": "apps/root-app-e2e/tsconfig.e2e.json",
+            "devServerTarget": "root-app:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "root-app:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:lint",
+          "options": {
+            "linter": "eslint",
+            "config": "apps/root-app-e2e/.eslintrc",
+            "tsConfig": ["apps/root-app-e2e/tsconfig.e2e.json"],
+            "exclude": ["**/node_modules/**", "!apps/root-app-e2e/**"]
           }
         }
       }
