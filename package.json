@@ -30,6 +30,7 @@
     "document-register-element": "1.13.1",
     "react": "16.12.0",
     "react-dom": "16.12.0",
+    "shelljs": "^0.8.4",
     "single-spa-react": "^2.13.0",
     "systemjs": "^6.2.6"
   },
